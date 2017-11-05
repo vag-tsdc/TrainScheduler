@@ -33,10 +33,13 @@
 // Grabbed values from text-boxes
 // function collectNewTrain() {}
 
+// result = calculateTrainData();
 
 
+// to be input
+
+// calculate the ish
 function calculateTrainData() {
-
     var tFrequency = newTrainF;
 
     var firstTime = newTrainT;
@@ -61,29 +64,20 @@ function calculateTrainData() {
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
 
-    newTrainNext = nextTrain;
-    newTrainMinutesAway = tMinutesTillTrain;
-   
+    return [tFrequency, firstTime, firstTimeConverted, currentTime, diffTime, tRemainder, tMinutesTillTrain, nextTrain]
+};
 
-
-    return [newTrainNext, newTrainMinutesAway];
+function fireBaseSet() {
+    tFrequency,
+    firstTime,
+    firstTimeConverted,
+    currentTime,
+    diffTime,
+    tRemainder,
+    tMinutesTillTrain,
+    nextTrain
 }
 
-// result = calculateTrainData();
-
-
-// variables for trains... 
-// var 1 - current time
-// var 2 - train time
-// var 3 - difference
-// var 4 - var3/ frequency
-// var 5 - convert var4 to minutes
-
-var currentTime = moment();
-
-var trainTime;
-var nextTrain;
-var trainOutput;
 
 // trainName = $("#add-train-name").val().trim();
 // trainDestination = $("#add-destination").val().trim();
@@ -111,33 +105,54 @@ $("button").on("click", function (event) {
     event.preventDefault();
     console.log("click.");
 
-    newTrainN = $("#add-train-name").val().trim();
-    newTrainD = $("#add-destination").val().trim();
-    newTrainT = $(("#add-train-time")).val().trim();
-    newTrainF = $("#add-frequency").val().trim();
+    var newTrainN = $("#add-train-name").val().trim();
+    var newTrainD = $("#add-destination").val().trim();
+    var newTrainT = $(("#add-train-time")).val().trim();
+    var newTrainF = $("#add-frequency").val().trim();
 
+    var tFrequency = newTrainF;
+    var firstTime = newTrainT;
+    console.log("first time: " + firstTime + "frequency : " + tFrequency)
 
-    calculateTrainData();
+    var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+    console.log("first time converted" + firstTimeConverted);
 
+    var currentTime = moment();
+    console.log("current time: " + moment(currentTime).format("hh:mm"));
 
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("difference in time: " + diffTime);
+
+    var tRemainder = diffTime % tFrequency;
+    console.log("train remainder " + tRemainder);
+
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    console.log("Minutes until next train: " + tMinutesTillTrain);
+
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("Arrival Time: " + moment(nextTrain).format("hh:mm"));
+
+    nextTrainTime = moment(nextTrain).format("hh:mm");
 
 
     // Code for "Setting values in the database"
     database.ref().push({
         trainName: newTrainN,
         trainDestination: newTrainD,
-        trainFreq: newTrainF,
-        nextTrain: newTrainNext,
-        trainTimeAway: newTrainMinutesAway,
+        trainFreq: tFrequency,
+        nextTrain: nextTrainTime,
+        trainTimeAway: tMinutesTillTrain,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
 
     })
+
+
 });
 // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
 database.ref().on("child_added", function (childSnapshot) {
 
     $("#btn-add").click(function () {
-        var markup = "<tr><td>" + childSnapshot.val().trainName + "</td><td>" + childSnapshot.val().trainDestination + "</td><td>" + childSnapshot.val().trainFreq + "</td><td>" + childSnapshot.val().nextTrain + + "</td><td>" + childSnapshot.val().trainTimeAway + "</td></tr>";
+        var markup = "<tr><td>" + childSnapshot.val().trainName + "</td><td>" + childSnapshot.val().trainDestination + "</td><td>" + childSnapshot.val().trainFreq + "</td><td>" + childSnapshot.val().newTrainNext + "</td><td>" + childSnapshot.val().trainTimeAway + "</td></tr>";
         $("table tbody").append(markup);
     });
 
