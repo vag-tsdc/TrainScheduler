@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Train Scheduler</title>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <link src="assets/style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10" id="header">
+            <div class="jumbotron text-center">
+                <h1>Soul Train Time</h1>
+                <img src="assets/images/train-vector.png" width="500px">
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10" id="current-train-table">
+            <table class="table table-hover">
+                <tr id="current-heading">
+                    <h3>Current Train Schedule
+                    </h3>
+                </tr>
+                <tr id="current-train-schedule">
+                    <td id="train-name">
+                        <p>Train Name
+                        </p>
+                    </td>
+                    <td id="destination-location">
+                        <p>Destination
+                        </p>
+                    </td>
+                    <td id="frequency-min">
+                        <p>Frequency (Min.)
+                        </p>
+                    </td>
+                    <td id="next-arrival">
+                        <p>Next Arrival
+                        </p>
+                    </td>
+                    <td id="minutes-away">
+                        <p>Minutes Away
+                        </p>
+                    </td>
+                </tr>
+
+
+                <!-- fake row -->
+
+                <tr id="new-train">
+                    <td id="new-train-name">
+                        <p id="new-name">Hogwarts Express</p>
+                    </td>
+                    <td id="new-destination-location">
+                        <p id="new-destination"> Hogsmeade Station</p>
+                    </td>
+                    <td id="new-frequency-min">
+                        <p id="new-frequency">4</p>
+                    </td>
+                    <td id="new-next-arrival">
+                        <p id="next-arrival">unknown</p>
+                    </td>
+                    <td id="new-minutes-away">
+                        <p id="new-minutes">unknown</p>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <!-- Add train Form -->
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+            <h4>Add Train</h4>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10" id="add-train-table">
+            <form>
+                <div class="form-group" id="add-train">
+                    <label for="train-name">Train Name</label>
+                    <br>
+                    <input type="text" class="form-control" id="add-train-name" placeholder="Ex. Trenton Express">
+                </div>
+
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <br>
+                    <input type="text" class="form-control" id="add-destination" placeholder="Ex. New York">
+                </div>
+
+                <div class="form-group">
+                    <label for="first-train-time">
+                        First Train Time (HH:mm - Military Time)
+                    </label>
+                    <br>
+                    <input type="time" id="add-train-time" placeholder="Ex. 05:50 pm">
+                </div>
+
+                <div class="form-group">
+                    <label for="frequency">Frequency in Minutes</label>
+                    <br>
+                    <input type="number" id="add-frequency" placeholder="30">
+                </div>
+
+                <button type="button" id="btn-add" class="btn btn-primary btn-xs">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+    </div>
+
+
+  <!-- Added Moment JS -->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+ 
+    <!-- Added Style JS -->
+  <script src="assets/TrainScheduler.js"></script>
+
+
+</body>
+
+</html>
